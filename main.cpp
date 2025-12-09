@@ -295,11 +295,31 @@ Milestone 5: Repeat 1 & 2 w/ struct of your choice
     use dynamically allocated array
 */
 struct DonutBooth : public Simulation {
+    //initialize array based on total customers joining list, + some wiggle room
     DonutBooth(int rounds, int initialCustomers) {
         queue = new DonutNode[rounds * 2 + initialCustomers]; //allocate memory to list 
         front = 0;
+        back = 0;
         simulationName = "Donut Booth";
     }
+
+    void Pop(bool showFlags = true) override {
+        //check for empty queue, back is one after the final person
+        if ((front - back) == 0) {
+            if (showFlags) cout << "Queue is empty" << endl;
+            return;
+        }
+
+        DonutNode customer = queue[front];
+        if (showFlags) cout << "Serving customer " << customer.name << " a donut: " << customer.flavor << endl;
+        front++; //shift front of queue up one to 'remove' from queue
+    }
+
+    void Push(bool showFlags = true) override {
+        DonutNode customer;
+        if (showFlags) cout << customer.name << " joined the queue" << endl;
+        queue[back++] = customer; //post inc to maintain back as one after final person
+    } 
 
     ~DonutBooth() {
         delete [] queue;
@@ -316,6 +336,7 @@ struct DonutBooth : public Simulation {
         };
         DonutNode* queue;
         int front; //stores front of queue, update as goes along
+        int back; //stores index of back of queue (1 after the final person)
         static const int NUM_FLAVORS = 20;
         static const string DONUT_NAMES[NUM_FLAVORS];
 };
@@ -355,7 +376,8 @@ int main() {
     CoffeeBooth coffee;
     MuffinBooth muffin;
     BraceletBooth bracelet;
-    vector<Simulation*> simulations = {&coffee, &muffin, &bracelet};
+    DonutBooth donut(DEFAULT_ROUNDS, DEFAULT_CUSTOMERS);
+    vector<Simulation*> simulations = {&coffee, &muffin, &bracelet, &donut};
     
     //add default customers
     for (Simulation* sim : simulations) {
