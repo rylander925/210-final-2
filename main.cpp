@@ -295,7 +295,7 @@ Milestone 5: Repeat 1 & 2 w/ struct of your choice
     use dynamically allocated array
 */
 struct DonutBooth : public Simulation {
-    //initialize array based on total customers joining list, + some wiggle room
+    //initialize array based on total possible customers joining list, + some wiggle room, will simply shift front position to remove from queue
     DonutBooth(int rounds, int initialCustomers) {
         queue = new DonutNode[rounds * 2 + initialCustomers]; //allocate memory to list 
         front = 0;
