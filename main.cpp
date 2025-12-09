@@ -500,6 +500,8 @@ Milestone 2: Run sim for 10 rounds
     *   1.0 serve head (if not empty)
 */
 int main() {
+    srand(time(0));
+
     //Initialize simulations, and place into an array
     CoffeeBooth coffee;
     MuffinBooth muffin;
@@ -519,7 +521,7 @@ int main() {
         for (Simulation* sim : simulations) sim->SimulateRound();
 
         //output queue after each round
-        cout << endl << "\tQueues: " << endl;
+        cout << "\tQueues: " << endl;
         for (Simulation* sim : simulations) {
             sim->Print();
             cout << endl;
