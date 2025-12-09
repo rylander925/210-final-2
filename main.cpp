@@ -292,11 +292,17 @@ const string BraceletBooth::BRACELET_NAMES[NUM_BRACELETS] = { //generated from C
 
 /*
 Milestone 5: Repeat 1 & 2 w/ struct of your choice
-    * use standard array
+    use dynamically allocated array
 */
 struct DonutBooth : public Simulation {
     DonutBooth(int rounds, int initialCustomers) {
+        queue = new DonutNode[rounds * 2 + initialCustomers]; //allocate memory to list 
+        front = 0;
+        simulationName = "Donut Booth";
+    }
 
+    ~DonutBooth() {
+        delete [] queue;
     }
 
     private:
@@ -308,11 +314,13 @@ struct DonutBooth : public Simulation {
                 flavor = DONUT_NAMES[rand() % NUM_FLAVORS];
             }
         };
+        DonutNode* queue;
+        int front; //stores front of queue, update as goes along
         static const int NUM_FLAVORS = 20;
         static const string DONUT_NAMES[NUM_FLAVORS];
 };
 
-const string DonutBooth::DONUT_NAMES[NUM_FLAVORS] = {
+const string DonutBooth::DONUT_NAMES[NUM_FLAVORS] = { //generated from ChatGPT
     "Glazed",
     "Chocolate Frosted",
     "Strawberry Sprinkle",
