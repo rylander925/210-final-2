@@ -204,7 +204,7 @@ struct MuffinBooth : public Simulation {
         static const string MUFFIN_NAMES[NUM_FLAVORS];
 };
 
-const string MuffinBooth::MUFFIN_NAMES[NUM_FLAVORS] = {
+const string MuffinBooth::MUFFIN_NAMES[NUM_FLAVORS] = { //generated w/ ChatGPT
     "Blueberry",
     "Chocolate Chip",
     "Banana Nut",
@@ -239,6 +239,50 @@ Milestone 3: Repeat 1 & 2 with a muffin booth
 Milestone 4: Repeat 1 & 2 w/ friendship bracelets
     * Use vector
 */
+struct BraceletBooth : public Simulation {
+    BraceletBooth() {
+        simulationName = "Friendship Bracelet Booth";
+    }
+
+    void Pop(bool showFlags = true) override {
+        if ()
+    }
+
+    private:
+        struct BraceletNode {
+            string name;
+            string bracelet;
+            BraceletNode() {
+
+            }
+        };
+        vector<BraceletNode> queue;
+        static const int NUM_BRACELETS = 20;
+        static const string BRACELET_NAMES[NUM_BRACELETS];
+};
+
+const string BraceletBooth::BRACELET_NAMES[NUM_BRACELETS] = {
+    "Chevron",
+    "Candy Stripe",
+    "Diagonal",
+    "Diamond",
+    "Zigzag",
+    "Heart Pattern",
+    "Braid",
+    "Spiral",
+    "Fishbone",
+    "Double Chevron",
+    "Arrowhead",
+    "Wave Pattern",
+    "Ladder",
+    "Chinese Staircase",
+    "V-Pattern",
+    "Braided Bead",
+    "Squared Knot",
+    "Twisted Rope",
+    "Herringbone",
+    "Box Stitch"
+};
 
 /*
 Milestone 5: Repeat 1 & 2 w/ struct of your choice
