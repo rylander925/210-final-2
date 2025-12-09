@@ -61,11 +61,11 @@ class Simulation {
         void RunSimulation(int rounds = DEFAULT_ROUNDS, int startingCustomers = DEFAULT_CUSTOMERS) {
             //add initial number of customers
             for (int i = 0; i < startingCustomers; i++) {
-                Push();
+                Push(false);
             }
 
             //run simulation rounds
-            cout << "Running " << simulationName << " simulation for " << rounds << " rounds" << endl;
+            cout << "Running \"" << simulationName << "\" simulation for " << rounds << " rounds starting with " << startingCustomers << " customers" << endl;
             for (int round = 1; round <= rounds; round++) { //note starts from 1
                 cout << "\tRound " << round << ":" << endl;
 
@@ -138,7 +138,7 @@ struct CoffeeBooth : public Simulation {
 
             //if customer exists, serve & remove from list
             CoffeeNode* deleteNode = head;
-            if (showFlags) cout << "Coffee booth served " << deleteNode->name << " a " << deleteNode->flavor << endl;
+            if (showFlags) cout << "Coffee booth served " << deleteNode->name << " a coffee named: " << deleteNode->flavor << endl;
             if (deleteNode->next) {
                 head = deleteNode->next;
             } else {
@@ -203,8 +203,5 @@ Milestone 5: Repeat 1 & 2 w/ struct of your choice
 
 int main() {
     CoffeeBooth coffee;
-    coffee.Push();
-    coffee.Push();
-    coffee.Push();
-    coffee.Pop();
+    coffee.RunSimulation();
 }
