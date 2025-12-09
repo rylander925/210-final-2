@@ -311,6 +311,18 @@ struct BraceletBooth : public Simulation {
         queue.push_back(customer);
     }
 
+    /**
+     * Outputs queue
+     */
+    void Print() {
+        cout << "Bracelet booth queue: " << endl;
+        int num = 0;
+        //traverse queue and output details
+        for (BraceletNode customer : queue) {
+            cout << "\t" << ++num << ". " << customer.name << " (" << customer.bracelet << ")" << endl; 
+        }
+    }
+
     private:
         struct BraceletNode {
             string name;
@@ -390,6 +402,18 @@ struct DonutBooth : public Simulation {
         queue[back++] = customer; //post inc to maintain back as one after final person
     } 
 
+    /**
+     * Output queue
+     */
+    void Print() override {
+        cout << "Donut booth queue: " << endl;
+        int index = front;
+        //traverse queue and output contents
+        while(back > index) { //back index is after last customer, should not visit back index
+            cout << "\t" << index - front + 1 << ". " << queue[index].name << " (" << queue[index].flavor << ")" << endl;
+            index++;
+        }
+    }
     //free memory from dynamically allocated array
     ~DonutBooth() {
         delete [] queue;
@@ -461,5 +485,10 @@ int main() {
     for (int round = 1; round <= DEFAULT_ROUNDS; round++) {
         cout << "\tRound " << round << ":" << endl;
         for (Simulation* sim : simulations) sim->SimulateRound();
+        cout << endl << "Current queues: " << endl;
+        for (Simulation* sim : simulations) {
+            sim->Print();
+            cout << endl;
+        }
     }
 }
