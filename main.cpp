@@ -41,14 +41,30 @@ const string NAMES[100] = { //generated using ChatGPT
 //class to provide common simulation functionalities accross booths
 class Simulation {
     public:
-        virtual void Push(bool showFlags = true);
-        virtual void Pop(bool showFlags = true);
+        /**
+         * Adds customer to queue
+         * @param showFlags True by default, shows serving messages
+         */
+        virtual void Push(bool showFlags = true) = 0;
+
+        /**
+         * Removes customer from front of queue
+         * @param showFlags True by default, shows serving messages
+         */
+        virtual void Pop(bool showFlags = true) = 0;
 
         /**
          * Runs simulation for specified number of rounds
          * @param rounds Number of rounds to run simulation
+         * @param startingCustomers Initial customers in the simulation
          */
-        void RunSimulation(int rounds) {
+        void RunSimulation(int rounds = DEFAULT_ROUNDS, int startingCustomers = DEFAULT_CUSTOMERS) {
+            //add initial number of customers
+            for (int i = 0; i < startingCustomers; i++) {
+                Push();
+            }
+
+            //run simulation rounds
             cout << "Running " << simulationName << " simulation for " << rounds << " rounds" << endl;
             for (int round = 1; round <= rounds; round++) { //note starts from 1
                 cout << "\tRound " << round << ":" << endl;
@@ -56,10 +72,20 @@ class Simulation {
                 //buffer output for pop/push message
                 cout << "\t\t";
                 Pop();
+
+                if ((rand() % 100) < JOIN_PERCENT) { //0-49 satisfies condition
+                    cout << "\t\t";
+                    Push();
+                }
             }
+            cout << "Finished running simulation" << endl;
         }
     protected:
         string simulationName;
+    private:
+        static const int JOIN_PERCENT = 50;
+        static const int DEFAULT_ROUNDS = 10;
+        static const int DEFAULT_CUSTOMERS = 3;
 };
 
 /*
@@ -68,10 +94,11 @@ Milestone 1: Coffee booth queue struct
     * Struct contains name & drink order
     * Use LLM to create arrays of names/drinks
 */
-struct CoffeeBooth {
+struct CoffeeBooth : public Simulation {
     public:
         //initialize w/ no nodes
         CoffeeBooth() {
+            simulationName = "Coffee Booth";
             head = nullptr;
             tail = nullptr;
         }
@@ -86,7 +113,7 @@ struct CoffeeBooth {
          * Output name of customer
          * @param showFlags True by default, will output name when called
          */
-        void Push(bool showFlags = true) {
+        void Push(bool showFlags = true) override {
             CoffeeNode* node = new CoffeeNode(); //next points to nullptr by default
             if (tail) {
                 tail->next = node;
@@ -102,7 +129,7 @@ struct CoffeeBooth {
          * Output information about customer served
          * @param showFlags True by default, will output if empty or customer if served
          */
-        void Pop(bool showFlags = true) {
+        void Pop(bool showFlags = true) override {
             //check for empty queue
             if (!head) {
                 if (showFlags) cout << "Coffee queue is empty" << endl;
