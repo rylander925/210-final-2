@@ -38,6 +38,30 @@ const string NAMES[100] = { //generated using ChatGPT
     "Ulric", "Violet", "Wesley", "Xenia", "Zion"
 };
 
+//class to provide common simulation functionalities accross booths
+class Simulation {
+    public:
+        virtual void Push(bool showFlags = true);
+        virtual void Pop(bool showFlags = true);
+
+        /**
+         * Runs simulation for specified number of rounds
+         * @param rounds Number of rounds to run simulation
+         */
+        void RunSimulation(int rounds) {
+            cout << "Running " << simulationName << " simulation for " << rounds << " rounds" << endl;
+            for (int round = 1; round <= rounds; round++) { //note starts from 1
+                cout << "\tRound " << round << ":" << endl;
+
+                //buffer output for pop/push message
+                cout << "\t\t";
+                Pop();
+            }
+        }
+    protected:
+        string simulationName;
+};
+
 /*
 Milestone 1: Coffee booth queue struct
     * Use linked list as core data structure
