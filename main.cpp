@@ -13,7 +13,7 @@ IDE Used: Visual Studio Code
 
 using namespace std;
 
-const std::string NAMES[100] = {
+const string NAMES[100] = {
     "Aiden", "Bella", "Caleb", "Diana", "Ethan",
     "Fiona", "Gavin", "Hannah", "Isaac", "Jade",
     "Kai", "Luna", "Mason", "Nora", "Owen",
