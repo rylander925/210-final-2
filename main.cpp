@@ -300,8 +300,9 @@ const string BraceletBooth::BRACELET_NAMES[NUM_BRACELETS] = { //generated from C
 
 /*
 Milestone 5: Repeat 1 & 2 w/ struct of your choice
-    * use queue
+    * use standard array
 */
+
 
 int main() {
     CoffeeBooth coffee;
