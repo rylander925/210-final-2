@@ -59,11 +59,11 @@ class Simulation {
          * Simulate a simulation round
          */
         void SimulateRound() {
-            cout << simulationName << ": ";
+            cout << "\t\t" << simulationName << ": ";
             Pop();
 
             if ((rand() % 100) < JOIN_PERCENT) { //0-49 satisfies condition
-                cout << simulationName << ": ";
+                cout << "\t\t" << simulationName << ": ";
                 Push();
             }
             cout << endl;
@@ -189,5 +189,16 @@ Milestone 5: Repeat 1 & 2 w/ struct of your choice
 
 int main() {
     CoffeeBooth coffee;
-    coffee.RunSimulation();
+    vector<Simulation*> simulations = {&coffee};
+    
+    //add default customers
+    for (Simulation* sim : simulations) {
+        for (int i = 0; i < DEFAULT_CUSTOMERS; i++) sim->Push(false);
+    }
+
+    cout << "Running simulation: " << endl;
+    for (int round = 1; round <= DEFAULT_ROUNDS; round++) {
+        cout << "\tRound " << round << ":" << endl;
+        for (Simulation* sim : simulations) sim->SimulateRound();
+    }
 }
