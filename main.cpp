@@ -173,3 +173,11 @@ Milestone 4: Repeat 1 & 2 w/ friendship bracelets
 Milestone 5: Repeat 1 & 2 w/ struct of your choice
     * use queue
 */
+
+int main() {
+    CoffeeBooth coffee;
+    coffee.Push();
+    coffee.Push();
+    coffee.Push();
+    coffee.Pop();
+}
