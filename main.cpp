@@ -245,7 +245,20 @@ struct BraceletBooth : public Simulation {
     }
 
     void Pop(bool showFlags = true) override {
-        if ()
+        if (queue.empty()) {
+            if (showFlags) cout << "Queue is empty" << endl;
+            return;
+        }
+
+        BraceletNode customer = queue.front();
+        if (showFlags) cout << "Taking customer " << customer.name << "'s bracelet order: " << customer.bracelet << endl;
+        queue.erase(queue.begin());
+    }
+
+    void Push(bool showFlags = true) override {
+        BraceletNode customer;
+        if (showFlags) cout << customer.name << " joined the queue" << endl;
+        queue.push_back(customer);
     }
 
     private:
@@ -253,7 +266,8 @@ struct BraceletBooth : public Simulation {
             string name;
             string bracelet;
             BraceletNode() {
-
+                name = NAMES[rand() % NUM_NAMES];
+                bracelet = BRACELET_NAMES[rand() % NUM_BRACELETS];
             }
         };
         vector<BraceletNode> queue;
@@ -261,7 +275,7 @@ struct BraceletBooth : public Simulation {
         static const string BRACELET_NAMES[NUM_BRACELETS];
 };
 
-const string BraceletBooth::BRACELET_NAMES[NUM_BRACELETS] = {
+const string BraceletBooth::BRACELET_NAMES[NUM_BRACELETS] = { //generated from ChatGPT
     "Chevron",
     "Candy Stripe",
     "Diagonal",
@@ -292,7 +306,8 @@ Milestone 5: Repeat 1 & 2 w/ struct of your choice
 int main() {
     CoffeeBooth coffee;
     MuffinBooth muffin;
-    vector<Simulation*> simulations = {&coffee, &muffin};
+    BraceletBooth bracelet;
+    vector<Simulation*> simulations = {&coffee, &muffin, &bracelet};
     
     //add default customers
     for (Simulation* sim : simulations) {
