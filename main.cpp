@@ -162,11 +162,11 @@ const string CoffeeBooth::COFFEE_FLAVORS[NUM_FLAVORS] = { //generated using Chat
             };
 
 /*
-Milestone 2: Run sim for 10 rounds
-    * Init queue w/ 3 customers
-    * Possibilities:
-    *   0.5 join queue
-    *   1.0 serve head (if not empty)
+Milestone 3: Repeat 1 & 2 with a muffin booth
+    * Use a deque as core data structure
+    * run 10 round sim
+        * same possibilities
+    * (Can reuse names, make new muffin flavor array)
 */
 struct MuffinBooth : public Simulation {
     MuffinBooth() {
@@ -226,14 +226,6 @@ const string MuffinBooth::MUFFIN_NAMES[NUM_FLAVORS] = { //generated w/ ChatGPT
     "Honey Oat",
     "Coconut Cream"
 };
-
-/*
-Milestone 3: Repeat 1 & 2 with a muffin booth
-    * Use a deque as core data structure
-    * run 10 round sim
-        * same possibilities
-    * (Can reuse names, make new muffin flavor array)
-*/
 
 /*
 Milestone 4: Repeat 1 & 2 w/ friendship bracelets
@@ -302,8 +294,55 @@ const string BraceletBooth::BRACELET_NAMES[NUM_BRACELETS] = { //generated from C
 Milestone 5: Repeat 1 & 2 w/ struct of your choice
     * use standard array
 */
+struct DonutBooth : public Simulation {
+    DonutBooth(int rounds, int initialCustomers) {
+
+    }
+
+    private:
+        struct DonutNode {
+            string name;
+            string flavor;
+            DonutNode() {
+                name = NAMES[rand() % NUM_NAMES];
+                flavor = DONUT_NAMES[rand() % NUM_FLAVORS];
+            }
+        };
+        static const int NUM_FLAVORS = 20;
+        static const string DONUT_NAMES[NUM_FLAVORS];
+};
+
+const string DonutBooth::DONUT_NAMES[NUM_FLAVORS] = {
+    "Glazed",
+    "Chocolate Frosted",
+    "Strawberry Sprinkle",
+    "Boston Cream",
+    "Jelly Filled",
+    "Maple Bar",
+    "Old Fashioned",
+    "Blueberry Cake",
+    "Powdered Sugar",
+    "Cinnamon Twist",
+    "Apple Fritter",
+    "Vanilla Cream",
+    "Cookies and Cream",
+    "Caramel Crunch",
+    "Lemon Filled",
+    "Red Velvet",
+    "S'mores",
+    "Peanut Butter Cup",
+    "Pumpkin Spice",
+    "Coconut Cream"
+};
 
 
+/*
+Milestone 2: Run sim for 10 rounds
+    * Init queue w/ 3 customers
+    * Possibilities:
+    *   0.5 join queue
+    *   1.0 serve head (if not empty)
+*/
 int main() {
     CoffeeBooth coffee;
     MuffinBooth muffin;
