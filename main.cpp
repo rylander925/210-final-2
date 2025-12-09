@@ -500,6 +500,7 @@ Milestone 2: Run sim for 10 rounds
     *   1.0 serve head (if not empty)
 */
 int main() {
+    //seed RNG
     srand(time(0));
 
     //Initialize simulations, and place into an array
