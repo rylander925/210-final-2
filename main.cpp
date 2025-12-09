@@ -46,6 +46,56 @@ Milestone 1: Coffee booth queue struct
 */
 struct CoffeeBooth {
     public:
+        //initialize w/ no nodes
+        CoffeeBooth() {
+            head = nullptr;
+            tail = nullptr;
+        }
+
+        ~CoffeeBooth() {
+            //remove all nodes from list
+            while(head) Pop(false);
+        }
+
+        /**
+         * Add customer to back of the linked list
+         * Output name of customer
+         * @param showFlags True by default, will output name when called
+         */
+        void Push(bool showFlags = true) {
+            CoffeeNode* node = new CoffeeNode(); //next points to nullptr by default
+            if (tail) {
+                tail->next = node;
+            } else {
+                head = node;
+            }
+            if (showFlags) cout << node->name << " joined the coffee queue" << endl;
+            tail = node;
+        }
+
+        /**
+         * Remove customer from front of the linked list
+         * Output information about customer served
+         * @param showFlags True by default, will output if empty or customer if served
+         */
+        void Pop(bool showFlags = true) {
+            //check for empty queue
+            if (!head) {
+                if (showFlags) cout << "Coffee queue is empty" << endl;
+                return;
+            }
+
+            //if customer exists, serve & remove from list
+            CoffeeNode* deleteNode = head;
+            if (showFlags) cout << "Coffee booth served " << deleteNode->name << " a " << deleteNode->flavor << endl;
+            if (deleteNode->next) {
+                head = deleteNode->next;
+            } else {
+                head = tail = nullptr;
+            }
+
+            delete deleteNode;
+        }
         
     private:
         static const int NUM_FLAVORS = 20;
@@ -56,6 +106,7 @@ struct CoffeeBooth {
             string flavor;
             CoffeeNode* next;
 
+            //Initialize node w/ random name & flavor
             CoffeeNode() {
                 next = nullptr;
                 name = NAMES[rand() % NUM_NAMES];
