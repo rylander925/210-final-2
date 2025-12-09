@@ -168,6 +168,64 @@ Milestone 2: Run sim for 10 rounds
     *   0.5 join queue
     *   1.0 serve head (if not empty)
 */
+struct MuffinBooth : public Simulation {
+    MuffinBooth() {
+        simulationName = "Muffin Booth";
+    }
+
+    void Pop(bool showFlags = true) override {
+        if (queue.empty()) {
+            if (showFlags) cout << "Queue is empty" << endl;
+            return;
+        }
+
+        MuffinNode customer = queue.front();
+        if (showFlags) cout << "Serving customer " << customer.name << " a muffin: " << customer.flavor << endl;
+        queue.pop_front(); 
+    }
+
+    void Push(bool showFlags = true) override {
+        MuffinNode customer;
+        if (showFlags) cout << customer.name << " joined the queue" << endl;
+        queue.push_back(customer);
+    }
+
+    private:
+        struct MuffinNode {
+            string name;
+            string flavor;
+            MuffinNode() {
+                name = NAMES[rand() % NUM_NAMES];
+                flavor = MUFFIN_NAMES[rand() % NUM_FLAVORS];
+            }
+        };
+        deque<MuffinNode> queue;
+        static const int NUM_FLAVORS = 20;
+        static const string MUFFIN_NAMES[NUM_FLAVORS];
+};
+
+const string MuffinBooth::MUFFIN_NAMES[NUM_FLAVORS] = {
+    "Blueberry",
+    "Chocolate Chip",
+    "Banana Nut",
+    "Lemon Poppy Seed",
+    "Double Chocolate",
+    "Cranberry Orange",
+    "Apple Cinnamon",
+    "Pumpkin Spice",
+    "Raspberry White Chocolate",
+    "Strawberry Cheesecake",
+    "Maple Walnut",
+    "Peach Cobbler",
+    "Blackberry Crumble",
+    "Cinnamon Streusel",
+    "Zucchini Nut",
+    "Cherry Almond",
+    "Vanilla Bean",
+    "Mocha Swirl",
+    "Honey Oat",
+    "Coconut Cream"
+};
 
 /*
 Milestone 3: Repeat 1 & 2 with a muffin booth
@@ -189,13 +247,15 @@ Milestone 5: Repeat 1 & 2 w/ struct of your choice
 
 int main() {
     CoffeeBooth coffee;
-    vector<Simulation*> simulations = {&coffee};
+    MuffinBooth muffin;
+    vector<Simulation*> simulations = {&coffee, &muffin};
     
     //add default customers
     for (Simulation* sim : simulations) {
         for (int i = 0; i < DEFAULT_CUSTOMERS; i++) sim->Push(false);
     }
 
+    //run simulation
     cout << "Running simulation: " << endl;
     for (int round = 1; round <= DEFAULT_ROUNDS; round++) {
         cout << "\tRound " << round << ":" << endl;
