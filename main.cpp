@@ -13,7 +13,9 @@ IDE Used: Visual Studio Code
 
 using namespace std;
 
-const string NAMES[100] = {
+const int NUM_NAMES = 100;
+
+const string NAMES[100] = { //generated using ChatGPT
     "Aiden", "Bella", "Caleb", "Diana", "Ethan",
     "Fiona", "Gavin", "Hannah", "Isaac", "Jade",
     "Kai", "Luna", "Mason", "Nora", "Owen",
@@ -42,10 +44,34 @@ Milestone 1: Coffee booth queue struct
     * Struct contains name & drink order
     * Use LLM to create arrays of names/drinks
 */
-struct CoffeeNode {
-    string name;
-    string order;
-}
+struct CoffeeBooth {
+    public:
+        
+    private:
+        static const int NUM_FLAVORS = 20;
+        static const string COFFEE_FLAVORS[NUM_FLAVORS];
+
+        struct CoffeeNode {
+            string name;
+            string flavor;
+            CoffeeNode* next;
+
+            CoffeeNode() {
+                next = nullptr;
+                name = NAMES[rand() % NUM_NAMES];
+                flavor = COFFEE_FLAVORS[rand() % NUM_FLAVORS];
+            }
+        };
+        CoffeeNode* head;
+        CoffeeNode* tail;
+};
+
+const string CoffeeBooth::COFFEE_FLAVORS[NUM_FLAVORS] = { //generated using ChatGPT
+            "Espresso", "Americano", "Latte", "Cappuccino", "Mocha",
+            "Macchiato", "Flat White", "Cortado", "Affogato", "Ristretto",
+            "Doppio", "Irish Coffee", "Frappe", "Cold Brew", "Nitro Brew",
+            "Turkish Coffee", "Vienna", "Red Eye", "Long Black", "Cafe Au Lait"
+            };
 
 /*
 Milestone 2: Run sim for 10 rounds
