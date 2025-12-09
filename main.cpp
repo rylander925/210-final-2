@@ -145,12 +145,19 @@ struct CoffeeBooth : public Simulation {
          * Output queue contents
          */
         void Print() override {
-            cout << "Coffee queue: " << endl;
+            cout << "\t\tCoffee queue: " << endl;
             CoffeeNode* node = head;
+
+            //check for empty queue
+            if (!head) {
+                cout << "\t\t\tQueue is empty" << endl;
+                return;
+            }
+
             int num = 0;
             //traverse list and output names
             while (node) {
-                cout << "\t" << ++num << ". " << node->name << "(" << node->flavor << ")" << endl;
+                cout << "\t\t\t" << ++num << ". " << node->name << "(" << node->flavor << ")" << endl;
                 node = node->next;
             }
         }
@@ -227,11 +234,18 @@ struct MuffinBooth : public Simulation {
      * Output queue
      */
     void Print() override {
-        cout << "Muffin booth queue:" << endl;
+        cout << "\t\tMuffin booth queue:" << endl;
+
+        //check for empty queue
+        if (queue.empty()) {
+            cout << "\t\t\tQueue is empty" << endl;
+            return;
+        }
+
         int num = 0;
         //traverse queue and output customer details
         for (MuffinNode customer : queue) {
-            cout << '\t' << ++num << ". " << customer.name << " (" << customer.flavor << ")" << endl;
+            cout << "\t\t\t" << ++num << ". " << customer.name << " (" << customer.flavor << ")" << endl;
         }
     }
 
@@ -315,11 +329,18 @@ struct BraceletBooth : public Simulation {
      * Outputs queue
      */
     void Print() {
-        cout << "Bracelet booth queue: " << endl;
+        cout << "\t\tBracelet booth queue: " << endl;
+
+        //check for empty queue
+        if (queue.empty()) {
+            cout << "\t\t\tQueue is empty" << endl;
+            return;
+        }
+
         int num = 0;
         //traverse queue and output details
         for (BraceletNode customer : queue) {
-            cout << "\t" << ++num << ". " << customer.name << " (" << customer.bracelet << ")" << endl; 
+            cout << "\t\t\t" << ++num << ". " << customer.name << " (" << customer.bracelet << ")" << endl; 
         }
     }
 
@@ -381,7 +402,7 @@ struct DonutBooth : public Simulation {
      */
     void Pop(bool showFlags = true) override {
         //check for empty queue, back is one after the final person
-        if ((front - back) == 0) {
+        if (front == back) {
             if (showFlags) cout << "Queue is empty" << endl;
             return;
         }
@@ -406,13 +427,21 @@ struct DonutBooth : public Simulation {
      * Output queue
      */
     void Print() override {
-        cout << "Donut booth queue: " << endl;
+        cout << "\t\tDonut booth queue: " << endl;
+        
+        //check for empty queue
+        if (back == front) {
+            cout << "\t\t\tQueue is empty" << endl;
+            return;
+        }
+
         int index = front;
         //traverse queue and output contents
         while(back > index) { //back index is after last customer, should not visit back index
-            cout << "\t" << index - front + 1 << ". " << queue[index].name << " (" << queue[index].flavor << ")" << endl;
+            cout << "\t\t\t" << index - front + 1 << ". " << queue[index].name << " (" << queue[index].flavor << ")" << endl;
             index++;
         }
+
     }
     //free memory from dynamically allocated array
     ~DonutBooth() {
@@ -485,7 +514,7 @@ int main() {
     for (int round = 1; round <= DEFAULT_ROUNDS; round++) {
         cout << "\tRound " << round << ":" << endl;
         for (Simulation* sim : simulations) sim->SimulateRound();
-        cout << endl << "Current queues: " << endl;
+        cout << endl << "\tQueues: " << endl;
         for (Simulation* sim : simulations) {
             sim->Print();
             cout << endl;
