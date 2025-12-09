@@ -59,9 +59,11 @@ class Simulation {
          * Simulate a simulation round
          */
         void SimulateRound() {
+            //Gauranteed to serve a customer
             cout << "\t\t" << simulationName << ": ";
             Pop();
 
+            //Chance customer joins queue
             if ((rand() % 100) < JOIN_PERCENT) { //0-49 satisfies condition
                 cout << "\t\t" << simulationName << ": ";
                 Push();
@@ -106,7 +108,7 @@ struct CoffeeBooth : public Simulation {
             } else {
                 head = node;
             }
-            if (showFlags) cout << node->name << " joined the coffee queue" << endl;
+            if (showFlags) cout << node->name << " joined the queue" << endl;
             tail = node;
         }
 
@@ -118,13 +120,13 @@ struct CoffeeBooth : public Simulation {
         void Pop(bool showFlags = true) override {
             //check for empty queue
             if (!head) {
-                if (showFlags) cout << "Coffee queue is empty" << endl;
+                if (showFlags) cout << "Queue is empty" << endl;
                 return;
             }
 
             //if customer exists, serve & remove from list
             CoffeeNode* deleteNode = head;
-            if (showFlags) cout << "Coffee booth served " << deleteNode->name << " a coffee named: " << deleteNode->flavor << endl;
+            if (showFlags) cout << "Served " << deleteNode->name << " a coffee: " << deleteNode->flavor << endl;
             if (deleteNode->next) {
                 head = deleteNode->next;
             } else {
@@ -169,22 +171,34 @@ Milestone 3: Repeat 1 & 2 with a muffin booth
     * (Can reuse names, make new muffin flavor array)
 */
 struct MuffinBooth : public Simulation {
+    //By default, initialize simulation name
     MuffinBooth() {
         simulationName = "Muffin Booth";
     }
 
+    /**
+     * Remove customer from queue
+     * @param showFlags If true, output messages
+     */
     void Pop(bool showFlags = true) override {
+        //check if queue is empty before removing
         if (queue.empty()) {
             if (showFlags) cout << "Queue is empty" << endl;
             return;
         }
 
+        //if not empty, remove customer from front of queue
         MuffinNode customer = queue.front();
         if (showFlags) cout << "Serving customer " << customer.name << " a muffin: " << customer.flavor << endl;
         queue.pop_front(); 
     }
 
+    /**
+     * Add customer to queue
+     * @param showFlags If true, output messages
+     */
     void Push(bool showFlags = true) override {
+        //create a new customer and add to back of queue
         MuffinNode customer;
         if (showFlags) cout << customer.name << " joined the queue" << endl;
         queue.push_back(customer);
@@ -194,6 +208,7 @@ struct MuffinBooth : public Simulation {
         struct MuffinNode {
             string name;
             string flavor;
+            //by default, fill random name & flavor
             MuffinNode() {
                 name = NAMES[rand() % NUM_NAMES];
                 flavor = MUFFIN_NAMES[rand() % NUM_FLAVORS];
@@ -232,22 +247,34 @@ Milestone 4: Repeat 1 & 2 w/ friendship bracelets
     * Use vector
 */
 struct BraceletBooth : public Simulation {
+    //By default, initialize simulation name
     BraceletBooth() {
         simulationName = "Friendship Bracelet Booth";
     }
 
+    /**
+     * Remove customer from queue
+     * @param showFlags If true, output messages
+     */
     void Pop(bool showFlags = true) override {
+        //check if queue is empty
         if (queue.empty()) {
             if (showFlags) cout << "Queue is empty" << endl;
             return;
         }
 
+        //if not, remove customer from front of vector
         BraceletNode customer = queue.front();
         if (showFlags) cout << "Taking customer " << customer.name << "'s bracelet order: " << customer.bracelet << endl;
         queue.erase(queue.begin());
     }
 
+    /**
+     * Add customer to queue
+     * @param showFlags If true, output messages
+     */
     void Push(bool showFlags = true) override {
+        //add customer to back of vector
         BraceletNode customer;
         if (showFlags) cout << customer.name << " joined the queue" << endl;
         queue.push_back(customer);
@@ -257,6 +284,8 @@ struct BraceletBooth : public Simulation {
         struct BraceletNode {
             string name;
             string bracelet;
+
+            //by default initialize w/ random name & bracelet
             BraceletNode() {
                 name = NAMES[rand() % NUM_NAMES];
                 bracelet = BRACELET_NAMES[rand() % NUM_BRACELETS];
@@ -303,6 +332,10 @@ struct DonutBooth : public Simulation {
         simulationName = "Donut Booth";
     }
 
+    /**
+     * Remove customer from queue
+     * @param showFlags Show messages if true
+     */
     void Pop(bool showFlags = true) override {
         //check for empty queue, back is one after the final person
         if ((front - back) == 0) {
@@ -310,17 +343,23 @@ struct DonutBooth : public Simulation {
             return;
         }
 
+        //if not empty, serve customer
         DonutNode customer = queue[front];
         if (showFlags) cout << "Serving customer " << customer.name << " a donut: " << customer.flavor << endl;
         front++; //shift front of queue up one to 'remove' from queue
     }
 
+    /**
+     * Add customer to queue
+     * @param showFlags Show messages if true
+     */
     void Push(bool showFlags = true) override {
         DonutNode customer;
         if (showFlags) cout << customer.name << " joined the queue" << endl;
         queue[back++] = customer; //post inc to maintain back as one after final person
     } 
 
+    //free memory from dynamically allocated array
     ~DonutBooth() {
         delete [] queue;
     }
@@ -329,6 +368,8 @@ struct DonutBooth : public Simulation {
         struct DonutNode {
             string name;
             string flavor;
+
+            //initializer gives random name & donut flavor
             DonutNode() {
                 name = NAMES[rand() % NUM_NAMES];
                 flavor = DONUT_NAMES[rand() % NUM_FLAVORS];
