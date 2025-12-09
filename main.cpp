@@ -14,6 +14,8 @@ IDE Used: Visual Studio Code
 using namespace std;
 
 const int NUM_NAMES = 100;
+const int DEFAULT_ROUNDS = 10;
+const int DEFAULT_CUSTOMERS = 3;
 
 const string NAMES[100] = { //generated using ChatGPT
     "Aiden", "Bella", "Caleb", "Diana", "Ethan",
@@ -54,38 +56,22 @@ class Simulation {
         virtual void Pop(bool showFlags = true) = 0;
 
         /**
-         * Runs simulation for specified number of rounds
-         * @param rounds Number of rounds to run simulation
-         * @param startingCustomers Initial customers in the simulation
+         * Simulate a simulation round
          */
-        void RunSimulation(int rounds = DEFAULT_ROUNDS, int startingCustomers = DEFAULT_CUSTOMERS) {
-            //add initial number of customers
-            for (int i = 0; i < startingCustomers; i++) {
-                Push(false);
+        void SimulateRound() {
+            cout << simulationName << ": ";
+            Pop();
+
+            if ((rand() % 100) < JOIN_PERCENT) { //0-49 satisfies condition
+                cout << simulationName << ": ";
+                Push();
             }
-
-            //run simulation rounds
-            cout << "Running \"" << simulationName << "\" simulation for " << rounds << " rounds starting with " << startingCustomers << " customers" << endl;
-            for (int round = 1; round <= rounds; round++) { //note starts from 1
-                cout << "\tRound " << round << ":" << endl;
-
-                //buffer output for pop/push message
-                cout << "\t\t";
-                Pop();
-
-                if ((rand() % 100) < JOIN_PERCENT) { //0-49 satisfies condition
-                    cout << "\t\t";
-                    Push();
-                }
-            }
-            cout << "Finished running simulation" << endl;
+            cout << endl;
         }
     protected:
         string simulationName;
     private:
         static const int JOIN_PERCENT = 50;
-        static const int DEFAULT_ROUNDS = 10;
-        static const int DEFAULT_CUSTOMERS = 3;
 };
 
 /*
