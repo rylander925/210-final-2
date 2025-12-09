@@ -3,12 +3,49 @@ COMSC-210 | Final 2 | Rylan Der
 IDE Used: Visual Studio Code
 */
 
+#include <string>
+#include <iostream>
+#include <list>
+#include <vector>
+#include <queue>
+#include <deque>
+#include <array>
+
+using namespace std;
+
+const std::string NAMES[100] = {
+    "Aiden", "Bella", "Caleb", "Diana", "Ethan",
+    "Fiona", "Gavin", "Hannah", "Isaac", "Jade",
+    "Kai", "Luna", "Mason", "Nora", "Owen",
+    "Piper", "Quinn", "Riley", "Sawyer", "Tessa",
+    "Uriel", "Vera", "Wyatt", "Xavier", "Yara",
+    "Zane", "Adrian", "Brielle", "Carter", "Delilah",
+    "Elijah", "Freya", "Grayson", "Hazel", "Ian",
+    "Jasmine", "Kendall", "Logan", "Mila", "Nolan",
+    "Olive", "Peyton", "Reid", "Sienna", "Tristan",
+    "Una", "Valerie", "Weston", "Ximena", "Yusuf",
+    "Zara", "Ariana", "Blake", "Connor", "Daisy",
+    "Emmett", "Faith", "Gianna", "Hunter", "Isla",
+    "Jaxon", "Keira", "Levi", "Maya", "Noah",
+    "Opal", "Paxton", "Rowan", "Stella", "Trevor",
+    "Uriah", "Vivian", "Walker", "Xander", "Yvette",
+    "Zeke", "Alexis", "Brooks", "Chloe", "Declan",
+    "Eden", "Finn", "Gemma", "Hudson", "Ivy",
+    "Jonah", "Kira", "Landon", "Morgan", "Nova",
+    "Omar", "Parker", "Rhea", "Sydney", "Tanner",
+    "Ulric", "Violet", "Wesley", "Xenia", "Zion"
+};
+
 /*
 Milestone 1: Coffee booth queue struct
     * Use linked list as core data structure
     * Struct contains name & drink order
     * Use LLM to create arrays of names/drinks
 */
+struct CoffeeNode {
+    string name;
+    string order;
+}
 
 /*
 Milestone 2: Run sim for 10 rounds
