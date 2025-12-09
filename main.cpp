@@ -70,6 +70,11 @@ class Simulation {
             }
             cout << endl;
         }
+
+        /**
+         * Output queue
+         */
+        virtual void Print() = 0;
     protected:
         string simulationName;
     private:
@@ -134,6 +139,20 @@ struct CoffeeBooth : public Simulation {
             }
 
             delete deleteNode;
+        }
+
+        /**
+         * Output queue contents
+         */
+        void Print() override {
+            cout << "Coffee queue: " << endl;
+            CoffeeNode* node = head;
+            int num = 0;
+            //traverse list and output names
+            while (node) {
+                cout << "\t" << ++num << ". " << node->name << "(" << node->flavor << ")" << endl;
+                node = node->next;
+            }
         }
         
     private:
@@ -202,6 +221,18 @@ struct MuffinBooth : public Simulation {
         MuffinNode customer;
         if (showFlags) cout << customer.name << " joined the queue" << endl;
         queue.push_back(customer);
+    }
+
+    /**
+     * Output queue
+     */
+    void Print() override {
+        cout << "Muffin booth queue:" << endl;
+        int num = 0;
+        //traverse queue and output customer details
+        for (MuffinNode customer : queue) {
+            cout << '\t' << ++num << ". " << customer.name << " (" << customer.flavor << ")" << endl;
+        }
     }
 
     private:
