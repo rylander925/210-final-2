@@ -108,11 +108,14 @@ struct CoffeeBooth : public Simulation {
          */
         void Push(bool showFlags = true) override {
             CoffeeNode* node = new CoffeeNode(); //next points to nullptr by default
+
+            //inserts node to back of linked list
             if (tail) {
                 tail->next = node;
             } else {
                 head = node;
             }
+
             if (showFlags) cout << node->name << " joined the queue" << endl;
             tail = node;
         }
@@ -428,7 +431,7 @@ struct DonutBooth : public Simulation {
      */
     void Print() override {
         cout << "\t\tDonut booth queue: " << endl;
-        
+
         //check for empty queue
         if (back == front) {
             cout << "\t\t\tQueue is empty" << endl;
@@ -489,7 +492,6 @@ const string DonutBooth::DONUT_NAMES[NUM_FLAVORS] = { //generated from ChatGPT
     "Coconut Cream"
 };
 
-
 /*
 Milestone 2: Run sim for 10 rounds
     * Init queue w/ 3 customers
@@ -498,13 +500,14 @@ Milestone 2: Run sim for 10 rounds
     *   1.0 serve head (if not empty)
 */
 int main() {
+    //Initialize simulations, and place into an array
     CoffeeBooth coffee;
     MuffinBooth muffin;
     BraceletBooth bracelet;
     DonutBooth donut(DEFAULT_ROUNDS, DEFAULT_CUSTOMERS);
     vector<Simulation*> simulations = {&coffee, &muffin, &bracelet, &donut};
     
-    //add default customers
+    //add default customers to each simulation
     for (Simulation* sim : simulations) {
         for (int i = 0; i < DEFAULT_CUSTOMERS; i++) sim->Push(false);
     }
@@ -514,6 +517,8 @@ int main() {
     for (int round = 1; round <= DEFAULT_ROUNDS; round++) {
         cout << "\tRound " << round << ":" << endl;
         for (Simulation* sim : simulations) sim->SimulateRound();
+
+        //output queue after each round
         cout << endl << "\tQueues: " << endl;
         for (Simulation* sim : simulations) {
             sim->Print();
